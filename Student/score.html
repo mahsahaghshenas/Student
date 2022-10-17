@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>score</title>
+    <style>
+
+        *{
+            margin: 0;padding: 0;box-sizing: border-box;
+        }
+        body{
+            width: 100%;
+            height: 100vh;
+            background-image: url(img/02.jfif);
+            background-repeat: no-repeat no-repeat;
+            background-position: cover;
+            background-size: 100% 100%;
+            
+        }
+        .box{
+            width: 30%;
+            height: auto;
+            border: 5px solid white;
+            background-color: rgba(0, 0, 0, 0.801);
+            border-radius: 5px;
+            margin: 50px auto;
+        }
+        .box>*{
+            width: 90%;
+            height: 30px;
+            margin: 20px 5%;
+        }
+        .box>input{
+            padding-left: 10px;
+        }
+        .second{
+            display: none;
+            background-color: lightblue;
+            border: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="box">
+        <input type="text" id="name" onkeyup="_nameFunc()" placeholder="Please enter name">
+        <input type="number" id="score" placeholder="Please enter the score" disabled min="0" max="20">
+        <button onclick="_sendFunc()" id="send" disabled>send</button>
+        <button onclick="_minFunc()" class="second">Min</button>
+        <button onclick="_maxFunc()" class="second">Max</button>
+        <button onclick="_avgFunc()" class="second">Avg</button>
+    </div>
+    <script>
+        var _name;
+        var _score;
+        var _myclass = new Array;
+        var i=0;
+        var z=0;
+        var _number = new Array();
+        function _nameFunc(){
+            _name = String(document.getElementById("name").value);
+            if(_name.length>=3){
+                document.getElementById("score").removeAttribute("disabled");
+                document.getElementById("send").removeAttribute("disabled");
+            }
+        }
+        function _sendFunc(){
+            document.getElementById("score").setAttribute("disabled","disabled");
+            document.getElementById("send").setAttribute("disabled","disabled");
+            _score = Number(document.getElementById("score").value);
+
+            if(_score!=null || _score!=""){
+                _myclass[i]=[_name , _score];
+                i++;
+
+                document.getElementById("name").value=null;
+                document.getElementById("score").value=null;
+
+                console.log(_myclass);
+
+            if(_myclass.length>=2){
+                document.getElementsByClassName("second")[0].style.display="block";
+                document.getElementsByClassName("second")[1].style.display="block";
+                document.getElementsByClassName("second")[2].style.display="block";
+                    }
+                }else{
+                    alert("please fill the blanks")
+                    }
+            }
+            
+
+        function calcFunc(){
+
+            for(z=0;z<_myclass.length;z++){
+                _number.push(_myclass[z][1]);
+            }
+            z=0;
+        }
+
+        function _minFunc(){
+            calcFunc();
+            var sum=_number[z];
+
+            for(z=0;z<_number.length;z++){
+                if(sum>=_number[z]){
+                    sum=_number[z];
+                }
+            }
+            document.getElementsByClassName("second")[0].innerHTML="Min is : "+sum;
+            document.getElementsByClassName("second")[0].setAttribute("readonly","readonly");
+        }
+
+        function _maxFunc(){
+            calcFunc();
+            var sum=_number[z];
+            for(z=0;z<_number.length;z++){
+                if(sum<=_number[z]){
+                    sum=_number[z];
+                }
+            }
+            document.getElementsByClassName("second")[1].innerHTML="Max is : "+sum;
+            document.getElementsByClassName("second")[1].setAttribute("readonly","readonly");
+        }
+
+        function _avgFunc(){
+            calcFunc();
+            var sum=0;
+            for(z=0;z<_number.length;z++){
+                sum+=_number[z];
+            }
+            var m=_number.length;
+            var avg=sum/m;
+
+            document.getElementsByClassName("second")[2].innerHTML="Average is : "+avg;
+            document.getElementsByClassName("second")[2].setAttribute("readonly","readonly");
+        }
+
+
+
+
+    </script>
+</body>
+</html>
